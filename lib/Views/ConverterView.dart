@@ -2,27 +2,20 @@ import 'package:flutter/material.dart';
 
 class ConverterView extends StatefulWidget {
 
+  final TextEditingController controller;
+
+  ConverterView({this.controller});
+
   createState() => _ConverterViewState();
 }
 
 class _ConverterViewState extends State<ConverterView> {
-
-  TextEditingController _controller;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    _controller = TextEditingController();
-  }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
       alignment: Alignment.center,
-      //height: (MediaQuery.of(context).size.height / 2),
       width: MediaQuery.of(context).size.width,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -41,12 +34,15 @@ class _ConverterViewState extends State<ConverterView> {
                   SizedBox(
                     width: 200,
                     child: TextField(
-                      controller: _controller,
+                      controller: widget.controller,
                       showCursor: false,
                       readOnly: true,
                       autofocus: false,
                       autocorrect: false,
                       keyboardType: TextInputType.number,
+                      onChanged: (value) {
+
+                      },
                     ),
                   ),
                 ],
@@ -68,7 +64,7 @@ class _ConverterViewState extends State<ConverterView> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  FlatButton(onPressed: (){}, child: Text('GBP')),
+                  FlatButton(onPressed: (){}, child: Text('USA')),
                   SizedBox(
                     width: 200,
                     child: TextField(
