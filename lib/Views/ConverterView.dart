@@ -14,7 +14,7 @@ class _ConverterViewState extends State<ConverterView> {
     // TODO: implement initState
     super.initState();
 
-    _controller = TextEditingController(text: "0");
+    _controller = TextEditingController();
   }
 
   @override
@@ -22,71 +22,66 @@ class _ConverterViewState extends State<ConverterView> {
     // TODO: implement build
     return Container(
       alignment: Alignment.center,
-      height: (MediaQuery.of(context).size.height / 2) - 30,
+      //height: (MediaQuery.of(context).size.height / 2),
       width: MediaQuery.of(context).size.width,
-      color: Colors.blueAccent,
-      child: Stack(
-        alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
         children: [
-          Positioned(
-            top: 25,
-            child: Material(
-              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              elevation: 10.0,
-              child: Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    FlatButton(onPressed: (){}, child: Text('EUR')),
-                    SizedBox(
-                      width: 200,
-                      child: TextField(
-                        controller: _controller,
-                        showCursor: false,
-                        readOnly: true,
-                        autofocus: false,
-                        autocorrect: false,
-                        keyboardType: TextInputType.number,
-                      ),
+          Material(
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            elevation: 10.0,
+            child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  FlatButton(onPressed: (){}, child: Text('EUR')),
+                  SizedBox(
+                    width: 200,
+                    child: TextField(
+                      controller: _controller,
+                      showCursor: false,
+                      readOnly: true,
+                      autofocus: false,
+                      autocorrect: false,
+                      keyboardType: TextInputType.number,
                     ),
-                  ],
-                ),
-              )
-            )
+                  ),
+                ],
+              ),
+            ),
           ),
-          Positioned(
-            top: (((MediaQuery.of(context).size.height / 2) - 30) / 2) - 30,
-            left: (MediaQuery.of(context).size.width / 2) - 35,
+          Container(
+            margin: EdgeInsets.all(10.0),
             child: GestureDetector(
-              child: Icon(Icons.swap_vertical_circle, size: 48.0, color: Colors.indigo[100],),
+              child: Icon(Icons.swap_vertical_circle, size: 48.0, color: Colors.indigo,),
               onTap: (){},
             )
           ),
-          Positioned(
-            bottom: 35,
-            child: Material(
-              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              elevation: 10.0,
-              child: Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    FlatButton(onPressed: (){}, child: Text('GBP')),
-                    SizedBox(
-                      width: 200,
-                      child: TextField(
-                        autofocus: false,
-                        autocorrect: false,
-                        keyboardType: TextInputType.number,
-                        readOnly: true,
-                      ),
+          Material(
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            elevation: 10.0,
+            child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  FlatButton(onPressed: (){}, child: Text('GBP')),
+                  SizedBox(
+                    width: 200,
+                    child: TextField(
+                      showCursor: false,
+                      autofocus: false,
+                      autocorrect: false,
+                      readOnly: true,
+                      keyboardType: TextInputType.number,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            )
+            ),
           )
         ],
       )
@@ -95,53 +90,68 @@ class _ConverterViewState extends State<ConverterView> {
 }
 
 //Stack(
-//alignment: Alignment.center,
-//children: [
-//Positioned(
-//top: 10,
-//child: Container(
-//padding: EdgeInsets.all(5.0),
-//child: Row(
-//children: [
-//FlatButton(onPressed: (){}, child: Text('EUR')),
-//Expanded(child: TextField(
-//autocorrect: false,
-//autofocus: false,
-//keyboardType: TextInputType.number,
-//))
-//],
-//),
-//),
-//),
-//Positioned(
-//bottom: 40,
-//child: IconButton(
-//icon: Icon(Icons.swap_horizontal_circle),
-//onPressed: (){},
-//),
-//
-//),
-//Positioned(
-//bottom: 10,
-//child: Container(
-//child: Row(
-//mainAxisSize: MainAxisSize.min,
-//children: [
-//FlatButton(
-//padding: EdgeInsets.all(10.0),
-//onPressed: (){},
-//child: Text('GBP'),
-//),
-//SizedBox(
-//width: MediaQuery.of(context).size.width - 100,
-//child: TextField(
-//autocorrect: false,
-//autofocus: false,
-//),
-//)
-//],
-//),
-//),
-//),
-//],
-//)
+//        alignment: Alignment.center,
+//        children: [
+//          Positioned(
+//            top: 10,
+//            child: Material(
+//              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+//              elevation: 10.0,
+//              child: Padding(
+//                padding: EdgeInsets.all(10.0),
+//                child: Row(
+//                  mainAxisSize: MainAxisSize.min,
+//                  children: [
+//                    FlatButton(onPressed: (){}, child: Text('EUR')),
+//                    SizedBox(
+//                      width: 200,
+//                      child: TextField(
+//                        controller: _controller,
+//                        showCursor: false,
+//                        readOnly: true,
+//                        autofocus: false,
+//                        autocorrect: false,
+//                        keyboardType: TextInputType.number,
+//                      ),
+//                    ),
+//                  ],
+//                ),
+//              )
+//            )
+//          ),
+//          Positioned(
+//            top: (((MediaQuery.of(context).size.height / 2) - 30) / 2) / 2,
+//            left: (MediaQuery.of(context).size.width / 2) - 35,
+//            child: GestureDetector(
+//              child: Icon(Icons.swap_vertical_circle, size: 48.0, color: Colors.indigo,),
+//              onTap: (){},
+//            )
+//          ),
+//          Positioned(
+//            top: 150,
+//            child: Material(
+//              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+//              elevation: 10.0,
+//              child: Padding(
+//                padding: EdgeInsets.all(10.0),
+//                child: Row(
+//                  mainAxisSize: MainAxisSize.min,
+//                  children: [
+//                    FlatButton(onPressed: (){}, child: Text('GBP')),
+//                    SizedBox(
+//                      width: 200,
+//                      child: TextField(
+//                        showCursor: false,
+//                        autofocus: false,
+//                        autocorrect: false,
+//                        readOnly: true,
+//                        keyboardType: TextInputType.number,
+//                      ),
+//                    ),
+//                  ],
+//                ),
+//              ),
+//            )
+//          )
+//        ],
+//      )
