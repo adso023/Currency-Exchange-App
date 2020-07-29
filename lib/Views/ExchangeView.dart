@@ -1,4 +1,6 @@
 
+import 'package:currencyexchange_app/Views/ConverterView.dart';
+import 'package:currencyexchange_app/Views/KeyboardView.dart';
 import 'package:flutter/material.dart';
 
 class ExchangeView extends StatefulWidget {
@@ -20,33 +22,10 @@ class _ExchangeViewState extends State<ExchangeView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: MainAxisSize.max,
           children: [
-            Center(child: Text('Currency Exchange'),),
-            Container(
-              margin: EdgeInsets.all(5.0),
-              padding: EdgeInsets.all(5.0),
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black)
-              ),
-              child: Row(
-                children: [
-                  Text('USD'),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width - 100,
-                    height: 20,
-                    child: TextField(
-                      autocorrect: false,
-                      autofocus: false,
-                      keyboardType: TextInputType.number,
-                      onSubmitted: (str) {
-
-                      },
-                    ),
-                  )
-                ],
-              ),
-            )
+            ConverterView(),
+            KeyboardView()
           ],
         ),
       )
