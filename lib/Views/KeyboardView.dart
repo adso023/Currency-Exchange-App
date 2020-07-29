@@ -2,10 +2,21 @@ import 'package:flutter/material.dart';
 
 class KeyboardView extends StatefulWidget {
 
+  final TextEditingController controller;
+
+  KeyboardView({this.controller});
+
   createState() => _KeyboardViewState();
 }
 
 class _KeyboardViewState extends State<KeyboardView> {
+
+  void addToInput(String num) => widget.controller.text += num;
+
+  void backspace() => widget.controller.text = widget.controller.text.substring(0, widget.controller.text.length-1);
+
+  void decimal() => !widget.controller.text.contains(".") ? widget.controller.text += "." : "";
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -19,33 +30,72 @@ class _KeyboardViewState extends State<KeyboardView> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              createButton(1),
-              createButton(2),
-              createButton(3),
+              GestureDetector(
+                child: createButton(1),
+                onTap: () => addToInput("1"),
+              ),
+              GestureDetector(
+                child: createButton(2),
+                onTap: () => addToInput("2"),
+              ),
+              GestureDetector(
+                child: createButton(3),
+                onTap: () => addToInput("3"),
+              ),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              createButton(4),
-              createButton(5),
-              createButton(6),
+              GestureDetector(
+                child: createButton(4),
+                onTap: () => addToInput("4"),
+              ),
+              GestureDetector(
+                child: createButton(5),
+                onTap: () => addToInput("5"),
+              ),
+              GestureDetector(
+                child: createButton(6),
+                onTap: () => addToInput("6"),
+              ),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              createButton(7),
-              createButton(8),
-              createButton(9)
+              GestureDetector(
+                child: createButton(7),
+                onTap: () => addToInput("7"),
+              ),
+              GestureDetector(
+                child: createButton(8),
+                onTap: () => addToInput("8"),
+              ),
+              GestureDetector(
+                child: createButton(9),
+                onTap: () => addToInput("9"),
+              ),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              createDecimal(),
-              createButton(0),
-              createBackspace(),
+              GestureDetector(
+                child: createDecimal(),
+                onTap: () => decimal(),
+              ),
+              GestureDetector(
+                child: createButton(0),
+                onTap: () => addToInput("0"),
+              ),
+              GestureDetector(
+                child: createBackspace(),
+                onTap: () => backspace(),
+                onLongPress: () {
+                  widget.controller.text = "";
+                },
+              ),
             ],
           ),
         ],
