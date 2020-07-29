@@ -19,13 +19,16 @@ class _ExchangeViewState extends State<ExchangeView> {
     // TODO: implement build
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
+        child: Stack(
           children: [
-            ConverterView(),
-            KeyboardView()
+            Positioned(
+              top: 50,
+              child: ConverterView(),
+            ),
+            Positioned(
+              bottom: 0,
+              child: KeyboardView(),
+            )
           ],
         ),
       )
