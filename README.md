@@ -1,3 +1,6 @@
 # Currency Exchange App
 
-Application written in Flutter
+Currency exchange app written in the flutter framework
+
+# Screenshots
+![Image](images/Screen1.png)
