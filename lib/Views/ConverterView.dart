@@ -1,15 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:currencyexchange_app/Views/CountryList.dart';
 
 class ConverterView extends StatefulWidget {
 
   final TextEditingController controller;
+  final GlobalKey<ScaffoldState> scaffoldKey;
 
-  ConverterView({this.controller});
+  ConverterView({this.controller, this.scaffoldKey});
 
   createState() => _ConverterViewState();
 }
 
 class _ConverterViewState extends State<ConverterView> {
+
+  var _from;
+  var _to;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    _from = {"name" : "Euro", "short" : "EUR"};
+    _to = {"name" : "US Dollar", "short" : "USD"};
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +44,20 @@ class _ConverterViewState extends State<ConverterView> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  FlatButton(onPressed: (){}, child: Text('EUR')),
+                  FlatButton(
+                    onPressed: () async {
+                      await showModalBottomSheet(
+                        context: context,
+                        backgroundColor: Color(0xFF737373),
+                        builder: (context) => CountryListSheet(onCountrySelected: (country) {
+                          _from = country;
+                        },)
+                      );
+
+                      setState(() {print(_from);});
+                    },
+                    child: Text('${_from["short"]}')
+                  ),
                   SizedBox(
                     width: 200,
                     child: TextField(
@@ -64,7 +91,19 @@ class _ConverterViewState extends State<ConverterView> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  FlatButton(onPressed: (){}, child: Text('USA')),
+                  FlatButton(
+                    onPressed: () async{
+                      await showModalBottomSheet(
+                        context: context,
+                        backgroundColor: Color(0xFF737373),
+                        builder: (context) => CountryListSheet(onCountrySelected: (country) {
+                          _to = country;
+                        },)
+                      );
+                      setState(() {print(_to);});
+                    },
+                    child: Text('${_to["short"]}')
+                  ),
                   SizedBox(
                     width: 200,
                     child: TextField(
