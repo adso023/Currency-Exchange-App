@@ -4,25 +4,24 @@ import 'package:currencyexchange_app/Views/CountryList.dart';
 class ConverterView extends StatefulWidget {
 
   final TextEditingController controller;
-  final GlobalKey<ScaffoldState> scaffoldKey;
 
-  ConverterView({this.controller, this.scaffoldKey});
+  ConverterView({this.controller});
 
   createState() => _ConverterViewState();
 }
 
 class _ConverterViewState extends State<ConverterView> {
 
-  var _from;
-  var _to;
+  Map<String, String> _from;
+  Map<String, String> _to;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    _from = {"name" : "Euro", "short" : "EUR"};
-    _to = {"name" : "US Dollar", "short" : "USD"};
+    _from = {"Code": "USD","Name": "United States Dollar","Country": "United States"};
+    _to = {"Code": "CAD","Name": "Canadian Dollar","Country": "Canada"};
   }
 
   @override
@@ -56,7 +55,7 @@ class _ConverterViewState extends State<ConverterView> {
 
                       setState(() {print(_from);});
                     },
-                    child: Text('${_from["short"]}')
+                    child: Text('${_from["Code"]}')
                   ),
                   SizedBox(
                     width: 200,
@@ -102,7 +101,7 @@ class _ConverterViewState extends State<ConverterView> {
                       );
                       setState(() {print(_to);});
                     },
-                    child: Text('${_to["short"]}')
+                    child: Text('${_to["Code"]}')
                   ),
                   SizedBox(
                     width: 200,
