@@ -22,4 +22,14 @@ class Exchange  {
       errorType: json["error-type"] ?? "NO ERROR"
     );
   }
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return "Exchange : ["
+        "$_result,"
+        "$_baseCode,"
+        "$_conversionRates,"
+        "$_errorType]";
+  }
 }
