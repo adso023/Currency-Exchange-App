@@ -14,7 +14,6 @@ class ExchangeView extends StatefulWidget {
 
 class _ExchangeViewState extends State<ExchangeView> {
   TextEditingController _controller;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -27,13 +26,12 @@ class _ExchangeViewState extends State<ExchangeView> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      key: _scaffoldKey,
       body: SafeArea(
         child: Stack(
           children: [
             Positioned(
               top: 50,
-              child: ConverterView(controller: _controller, scaffoldKey: _scaffoldKey,),
+              child: ConverterView(controller: _controller,),
             ),
             Positioned(
               bottom: 0,
