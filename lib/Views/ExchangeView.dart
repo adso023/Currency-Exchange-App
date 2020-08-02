@@ -13,13 +13,15 @@ class ExchangeView extends StatefulWidget {
 }
 
 class _ExchangeViewState extends State<ExchangeView> {
-  TextEditingController _controller;
+  TextEditingController _fromController;
+  TextEditingController _toController;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _controller = TextEditingController();
+    _fromController = TextEditingController();
+    _toController = TextEditingController();
   }
 
   @override
@@ -31,11 +33,11 @@ class _ExchangeViewState extends State<ExchangeView> {
           children: [
             Positioned(
               top: 50,
-              child: ConverterView(controller: _controller,),
+              child: ConverterView(fromController: _fromController, toController: _toController,),
             ),
             Positioned(
               bottom: 0,
-              child: KeyboardView(controller: _controller,),
+              child: KeyboardView(controller: _fromController,),
             )
           ],
         ),
