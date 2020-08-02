@@ -16,6 +16,8 @@ class Exchange  {
     );
   }
 
+  double getExchangeRate(String code) => double.parse(_rates[code].toString());
+
   @override
   String toString() {
     // TODO: implement toString
