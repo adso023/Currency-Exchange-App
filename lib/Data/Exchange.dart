@@ -1,25 +1,18 @@
 class Exchange  {
-  final String _result;
-  final String _baseCode;
-  final List<Map<String, double>> _conversionRates;
-  final String _errorType;
+  final String _base;
+  final DateTime _date;
+  final Map<String, dynamic> _rates;
+  final String _error;
 
-  Exchange({
-    String result,
-    String baseCode,
-    List<Map<String, double>> conversionRates,
-    String errorType}) :
-        _result = result,
-        _baseCode = baseCode,
-        _conversionRates = conversionRates,
-        _errorType = errorType;
+  Exchange({String base, DateTime date, Map<String, dynamic> rates, String error}) :
+      _base = base, _date = date, _rates = rates, _error = error;
 
   factory Exchange.fromJson(Map<String, dynamic> json) {
     return Exchange(
-      result: json["result"] ?? "error",
-      baseCode: json["base_code"] ?? "",
-      conversionRates: json["conversion_rates"] ?? [],
-      errorType: json["error-type"] ?? "NO ERROR"
+      base: json["base"] ?? "",
+      date: json["date"] != null ? DateTime.parse(json["date"]) : DateTime.now(),
+      rates: json["rates"] ?? {},
+      error: json["error"] ?? "NO-ERROR"
     );
   }
 
@@ -27,9 +20,9 @@ class Exchange  {
   String toString() {
     // TODO: implement toString
     return "Exchange : ["
-        "$_result,"
-        "$_baseCode,"
-        "$_conversionRates,"
-        "$_errorType]";
+        "$_base,"
+        "$_date,"
+        "$_rates,"
+        "$_error]";
   }
 }
