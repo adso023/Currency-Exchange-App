@@ -11,11 +11,11 @@ class KeyboardView extends StatefulWidget {
 
 class _KeyboardViewState extends State<KeyboardView> {
 
-  void addToInput(String num) => widget.controller.text += num;
+  void addToInput(String num) => (widget.controller.text.length < 15) ? widget.controller.text += num : "";
 
-  void backspace() => widget.controller.text = widget.controller.text.substring(0, widget.controller.text.length-1);
+  void backspace() => widget.controller.text = widget.controller.text.isEmpty ? "" : widget.controller.text.substring(0, widget.controller.text.length-1);
 
-  void decimal() => !widget.controller.text.contains(".") ? widget.controller.text += "." : "";
+  void decimal() => !widget.controller.text.contains(".") && widget.controller.text.length < 15 ? widget.controller.text += "." : "";
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +113,7 @@ class _KeyboardViewState extends State<KeyboardView> {
       //color: Color.fromRGBO(10, 46, 54, 1),
       borderRadius: BorderRadius.all(Radius.circular(5.0))
     ),
-    child: Text(number.toString(), style: TextStyle(color: Colors.white, fontSize: 30),),
+    child: Text(number.toString(), style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w600),),
   );
 
   Container createDecimal() => Container(
@@ -126,7 +126,7 @@ class _KeyboardViewState extends State<KeyboardView> {
         //color: Color.fromRGBO(10, 46, 54, 1),
         borderRadius: BorderRadius.all(Radius.circular(5.0))
     ),
-    child: Text('.', style: TextStyle(color: Colors.white, fontSize: 30),),
+    child: Text('.', style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w600),),
   );
 
   Container createBackspace() => Container(
@@ -139,6 +139,6 @@ class _KeyboardViewState extends State<KeyboardView> {
         //color: Color.fromRGBO(10, 46, 54, 1),
         borderRadius: BorderRadius.all(Radius.circular(5.0))
     ),
-    child: Text(String.fromCharCodes(Runes('\u232B')), style: TextStyle(color: Colors.white, fontSize: 30),),
+    child: Text(String.fromCharCodes(Runes('\u232B')), style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w500),),
   );
 }
