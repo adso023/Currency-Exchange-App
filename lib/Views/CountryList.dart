@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:currencyexchange_app/Data/CountryList.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CountryListSheet extends StatefulWidget {
   final Function(Map<String, String> country) onCountrySelected;
@@ -36,6 +37,7 @@ class _CountryListSheetState extends State<CountryListSheet> {
             title: Text(country["Country"]),
             subtitle: Text(country["Name"]),
             trailing: Text(country["Code"]),
+            leading: SvgPicture.asset(country["flag"], height: 50,),
             onTap: () {
               widget.onCountrySelected(country);
               Navigator.pop(context);
