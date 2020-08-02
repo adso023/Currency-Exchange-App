@@ -5,10 +5,11 @@ import 'package:currencyexchange_app/Views/CountryList.dart';
 
 class ConverterView extends StatefulWidget {
 
-  final TextEditingController controller;
+  final TextEditingController fromController;
+  final TextEditingController toController;
   final ExchangeApi exchangeApi;
 
-  ConverterView({this.controller}) : exchangeApi = ExchangeApi();
+  ConverterView({this.fromController, this.toController}) : exchangeApi = ExchangeApi();
 
   createState() => _ConverterViewState();
 }
@@ -27,6 +28,20 @@ class _ConverterViewState extends State<ConverterView> {
     _from = {"Code": "USD","Name": "United States Dollar","Country": "United States"};
     _to = {"Code": "CAD","Name": "Canadian Dollar","Country": "Canada"};
     widget.exchangeApi.fetchExchange(_from["Code"]).then((value) => _exchange = value);
+
+    widget.fromController.addListener(updateFromTo);
+    widget.toController.addListener(() { });
+  }
+
+  void updateFromTo() {
+    widget.fromController.selection = TextSelection.fromPosition(TextPosition(offset: widget.fromController.text.length));
+    if(widget.fromController.text.isNotEmpty) {
+      double rate = _exchange.getExchangeRate(_to["Code"]);
+      double convert = rate * (double.tryParse(widget.fromController.text) ?? 0);
+      widget.toController.text = convert.toString();
+    } else {
+      widget.toController.text = widget.fromController.text;
+    }
   }
 
   @override
@@ -48,43 +63,42 @@ class _ConverterViewState extends State<ConverterView> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Material(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    child: FlatButton(
-                      onPressed: () async {
-                        await showModalBottomSheet(
+                  MaterialButton(
+                    height: 50.0,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0)),side: BorderSide(color: Colors.red[300], width: 2.0, style: BorderStyle.solid)),
+                    textTheme: ButtonTextTheme.accent,
+                    onPressed: () async {
+                      await showModalBottomSheet(
                           context: context,
                           backgroundColor: Color(0xFF737373),
                           builder: (context) => CountryListSheet(onCountrySelected: (country) async{
                             _from = country;
                             _exchange = await widget.exchangeApi.fetchExchange(_from["Code"]);
-                            print(_exchange);
+                            updateFromTo();
                           },)
-                        );
+                      );
 
-                        setState(() {print(_from);});
-                      },
-                      child: Text('${_from["Code"]}')
-                    ),
+                      setState(() {print(_from);});
+                    },
+                    child: Text('${_from["Code"]}', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600, letterSpacing: 2.5,),)
                   ),
                   Container(
                     margin: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
                     child: SizedBox(
                       width: 200,
                       child: TextField(
-                        controller: widget.controller,
-                        showCursor: false,
+                        controller: widget.fromController,
+                        showCursor: true,
                         readOnly: true,
                         autofocus: false,
                         autocorrect: false,
-                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0)
+                          contentPadding: EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
                         ),
-                        onChanged: (value) {
-
-                        },
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
@@ -95,9 +109,17 @@ class _ConverterViewState extends State<ConverterView> {
           Container(
             margin: EdgeInsets.all(10.0),
             child: GestureDetector(
-              child: Icon(Icons.swap_vertical_circle, size: 48.0, color: Colors.indigo,),
-              onTap: (){
+              child: Icon(Icons.swap_vert, size: 48.0, color: Colors.indigo),
+              onTap: () async{
                 print('Hit the switcher button');
+                var tmp = _from;
+                _from = _to;
+                _to = tmp;
+                _exchange = await widget.exchangeApi.fetchExchange(_from["Code"]);
+
+                setState(() {
+                  updateFromTo();
+                });
               },
             )
           ),
@@ -109,39 +131,40 @@ class _ConverterViewState extends State<ConverterView> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Material(
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    color: Colors.orange,
-                    child: FlatButton(
-                      onPressed: () async{
-                        await showModalBottomSheet(
+                  MaterialButton(
+                    height: 50.0,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0)),side: BorderSide(color: Colors.orange[300], width: 2.0, style: BorderStyle.solid)),
+                    textTheme: ButtonTextTheme.accent,
+                    onPressed: () async{
+                      await showModalBottomSheet(
                           context: context,
                           backgroundColor: Color(0xFF737373),
                           builder: (context) => CountryListSheet(onCountrySelected: (country) {
                             _to = country;
+                            updateFromTo();
                           },)
-                        );
-                        setState(() {print(_to);});
-                      },
-                      child: Text('${_to["Code"]}')
-                    ),
+                      );
+                      setState(() {print(_to);});
+                    },
+                    child: Text('${_to["Code"]}', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600, letterSpacing: 2.5),)
                   ),
                   Container(
                     margin: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
                     child: SizedBox(
                       width: 200,
                       child: TextField(
+                        controller: widget.toController,
                         showCursor: false,
                         autofocus: false,
                         autocorrect: false,
                         readOnly: true,
-                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
                         ),
-                        onChanged: (value) {
-
-                        },
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
@@ -154,70 +177,3 @@ class _ConverterViewState extends State<ConverterView> {
     );
   }
 }
-
-//Stack(
-//        alignment: Alignment.center,
-//        children: [
-//          Positioned(
-//            top: 10,
-//            child: Material(
-//              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-//              elevation: 10.0,
-//              child: Padding(
-//                padding: EdgeInsets.all(10.0),
-//                child: Row(
-//                  mainAxisSize: MainAxisSize.min,
-//                  children: [
-//                    FlatButton(onPressed: (){}, child: Text('EUR')),
-//                    SizedBox(
-//                      width: 200,
-//                      child: TextField(
-//                        controller: _controller,
-//                        showCursor: false,
-//                        readOnly: true,
-//                        autofocus: false,
-//                        autocorrect: false,
-//                        keyboardType: TextInputType.number,
-//                      ),
-//                    ),
-//                  ],
-//                ),
-//              )
-//            )
-//          ),
-//          Positioned(
-//            top: (((MediaQuery.of(context).size.height / 2) - 30) / 2) / 2,
-//            left: (MediaQuery.of(context).size.width / 2) - 35,
-//            child: GestureDetector(
-//              child: Icon(Icons.swap_vertical_circle, size: 48.0, color: Colors.indigo,),
-//              onTap: (){},
-//            )
-//          ),
-//          Positioned(
-//            top: 150,
-//            child: Material(
-//              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-//              elevation: 10.0,
-//              child: Padding(
-//                padding: EdgeInsets.all(10.0),
-//                child: Row(
-//                  mainAxisSize: MainAxisSize.min,
-//                  children: [
-//                    FlatButton(onPressed: (){}, child: Text('GBP')),
-//                    SizedBox(
-//                      width: 200,
-//                      child: TextField(
-//                        showCursor: false,
-//                        autofocus: false,
-//                        autocorrect: false,
-//                        readOnly: true,
-//                        keyboardType: TextInputType.number,
-//                      ),
-//                    ),
-//                  ],
-//                ),
-//              ),
-//            )
-//          )
-//        ],
-//      )
