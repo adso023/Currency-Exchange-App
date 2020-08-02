@@ -7,4 +7,7 @@ Currency exchange app written in the flutter framework
 <img src="images/Screen1.png" height=400em />
 
 #### Supported currencies list
-<img src="images/FlagScrolling.gif" height=400em />
+<img src="images/SupportCurrencyList.gif" height=400em />
+
+#### Converting Example (Convert -> Swap -> Convert -> Switch Country -> Convert)
+<img src="images/ConvertingExample.gif" height=400em />
